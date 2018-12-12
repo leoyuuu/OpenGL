@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import me.leoyuu.opengl.camera.CameraActivity
 import me.leoyuu.opengl.ctrl.jump.JumpActivity
+import me.leoyuu.opengl.esv3.V3Activity
 import me.leoyuu.opengl.img.ImgActivity
 import me.leoyuu.opengl.jni.JniActivity
 import me.leoyuu.opengl.list.ItemView
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() , BaseOnItemClickListener<RenderItem>{
             add(RenderItem(ImgActivity::class.java, "图片纹理"))
             add(RenderItem(JniActivity::class.java, "原生层绘制"))
             add(RenderItem(ObjViewActivity::class.java, "3d max obj 模型绘制"))
+            add(RenderItem(V3Activity::class.java, "OpenGL 3.0"))
             add(RenderItem(TmpActivity::class.java, "Tmp"))
         })
     }
