@@ -5,7 +5,11 @@
 #ifndef OPENGL_GL_HELPER_H
 #define OPENGL_GL_HELPER_H
 
-#include <GLES2/gl2.h>
+#ifdef GL3
+    #include <GLES3/gl3.h>
+#else
+    #include <GLES2/gl2.h>
+#endif
 
 GLuint createProgram(const char* pVertexSource, const char* pFragmentSource);
 

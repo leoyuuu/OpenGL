@@ -9,9 +9,13 @@
 #include <GLES3/gl3.h>
 #include <sys/types.h>
 
+#define GL3 1
+
 class RenderV3{
 protected:
     GLuint program;
+    GLuint vPosition;
+    GLuint uColor;
     GLfloat mProjectMatrix[16] = {
             1.0, 0.0, 0.0, 0.0,
             0.0, 1.0, 0.0, 0.0,
