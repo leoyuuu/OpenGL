@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.gl_view.*
 import me.leoyuu.opengl.R
+import me.leoyuu.opengl.jni.JniGl
 
 /**
  * date 2018/12/13
@@ -34,5 +35,6 @@ class V3Activity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         gl.onPause()
+        JniGl.nativeDone()
     }
 }

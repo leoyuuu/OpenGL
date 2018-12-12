@@ -12,6 +12,7 @@
 #include "renders/RenderCamera.h"
 #include "renders/RenderCube.h"
 #include "renders/RenderSimple.h"
+#include "renders/v3/RenderV3.h"
 
 #define LOG_TAG "native_gl_draw"
 
@@ -19,12 +20,14 @@
 #define  LOG_E(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG, __VA_ARGS__)
 
 Render* render = NULL;
-
+RenderV3* renderV3 = NULL;
 
 void glInit() {
     LOG_I("gl init");
     if (render != NULL) {
         render->init();
+    } else if (renderV3 != NULL) {
+        renderV3->init();
     } else {
         LOG_E("native render not init");
     }
@@ -34,6 +37,8 @@ void glResizeScreen(uint width, uint height) {
     LOG_I("glResizeScreen(%d, %d)", width, height);
     if (render != NULL) {
         render->resize(width, height);
+    } if (renderV3 != NULL) {
+        renderV3->resize(width, height);
     } else {
         LOG_E("native render not init");
     }
@@ -42,7 +47,9 @@ void glResizeScreen(uint width, uint height) {
 void glDrawFrame() {
     if (render != NULL) {
         render->renderFrame();
-    } else {
+    } else if (renderV3 != NULL) {
+        renderV3->renderFrame();
+    } {
         LOG_E("native render not init");
     }
 }
@@ -54,6 +61,8 @@ void glInitType(int type) {
         render = new RenderCube();
     } else if (type == 3) {
         render = new RenderCamera();
+    } if (type == 4){
+        renderV3 = new RenderV3();
     } else{
         render = new Render();
     }
@@ -71,6 +80,8 @@ void glDone() {
 void onClick(int btn) {
     if (render != NULL) {
         render->click();
+    } if (renderV3 != NULL) {
+        renderV3->click();
     } else {
         LOG_E("native render not init");
     }

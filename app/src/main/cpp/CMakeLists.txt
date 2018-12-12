@@ -13,6 +13,7 @@ add_library(
         draw/renders/RenderCamera.cpp
         draw/renders/RenderCube.cpp
         draw/renders/RenderSimple.cpp
+        draw/renders/v3/RenderV3.cpp
         native_helper.h
         native_helper.cpp
         native_gl.h

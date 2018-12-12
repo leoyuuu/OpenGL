@@ -23,6 +23,7 @@ public class JniGl {
     public static final int INIT_TYPE_SIMPLE  = 1;
     public static final int INIT_TYPE_CUBE    = 2;
     public static final int INIT_TYPE_CAMERA  = 3;
+    public static final int INIT_TYPE_V3      = 4;
 
     static {
         System.loadLibrary("gljni");
