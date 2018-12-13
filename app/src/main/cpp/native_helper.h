@@ -8,6 +8,8 @@
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
 #include <assert.h>
+#include <string>
+#include <vector>
 
 class S_App {
 public:
@@ -17,6 +19,8 @@ public:
 
 // 需要调 free 释放本函数申请的数据
 char* Asset_ReadString(const char* filename);
+
+bool Asset_ReadBuf(const char * filename, std::vector<uint8_t>& buf);
 
 void initAsset(AAssetManager* assetManager);
 

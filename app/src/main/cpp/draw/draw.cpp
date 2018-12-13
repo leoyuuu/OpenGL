@@ -62,7 +62,7 @@ void glInitType(int type) {
     } else if (type == 3) {
         render = new RenderCamera();
     } if (type == 4){
-        renderV3 = new RenderV3();
+        renderV3 = RenderV3::getRender();
     } else{
         render = new Render();
     }
