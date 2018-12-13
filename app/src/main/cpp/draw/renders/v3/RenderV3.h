@@ -24,8 +24,6 @@ protected:
     GLuint VBO[VBO_NUM];
     GLuint EBO[EBO_NUM];
     GLuint program;
-    GLuint vPosition;
-    GLuint uColor;
     GLfloat mProjectMatrix[16] = {
             1.0, 0.0, 0.0, 0.0,
             0.0, 1.0, 0.0, 0.0,
