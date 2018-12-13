@@ -13,33 +13,43 @@
 
 static const GLfloat points[] =
         {
-                -0.5f, -0.5f, 0.0f,
-                -0.25f, 0.5f, 0.0f,
-                0.5f,  0.5f, 0.0f,
-                0.25f, -0.25f, 0.0f
+                0.5f, 0.5f, 0.0f,   // 右上角
+                0.5f, -0.5f, 0.0f,  // 右下角
+                -0.5f, -0.5f, 0.0f, // 左下角
+                -0.5f, 0.5f, 0.0f   // 左上角
         };
 
-static const GLushort point_indices[] = {
-        1, 0, 2, 3
+static const GLuint point_indices[] = {
+        0, 1, 3, // 第一个三角形
+        1, 2, 3  // 第二个三角形
 };
 
 void RenderV3::init() {
     glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
     program = createProgram("v3/base.vert", "v3/base.frag");
-    vPosition = (GLuint)glGetAttribLocation(program, "vPosition");
+    vPosition = (GLuint)glGetAttribLocation(program, "aPosition");
     uColor = (GLuint)glGetUniformLocation(program, "uColor");
 
-    GLuint ebo[1];
-    glGenBuffers(1, ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo[0]);
+    glGenVertexArrays(1, VAO);
+    glGenBuffers(1, VBO);
+    glGenBuffers(1, EBO);
+    vaoNum++;
+    vboNum++;
+    eboNum++;
+
+    glBindVertexArray(VAO[0]);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[0]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(point_indices), point_indices, GL_STATIC_DRAW);
 
-    GLuint vbo[1];
-    glGenBuffers(1, vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-    glBufferData(GL_ARRAY_BUFFER, 4 * 3 * 4, points, GL_STATIC_DRAW);
-    glVertexAttribPointer(vPosition, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glVertexAttribPointer(vPosition, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    glEnableVertexAttribArray(vPosition);
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     LOG_I("init program program: %d, position: %d", program, vPosition);
 }
 
@@ -48,14 +58,12 @@ void RenderV3::resize(uint width, uint height) {
 }
 
 void RenderV3::renderFrame() {
-    glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(program);
     glUniform4f(uColor, 1.0f, 0.0f, 0.0f, 1.0f);
-    glEnableVertexAttribArray(vPosition);
-    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, NULL);
-    checkGlError("glDrawArrays");
-    glDisableVertexAttribArray(this->vPosition);
-    LOG_I("render frame program: %d, position: %d", this->program, this->vPosition);
+    glBindVertexArray(VAO[0]);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)0);
+    glBindVertexArray(0);
 }
 
 void RenderV3::click() {
@@ -67,5 +75,7 @@ RenderV3::RenderV3() {
 }
 
 RenderV3::~RenderV3() {
-
+    glDeleteVertexArrays(vaoNum, VAO);
+    glDeleteBuffers(vboNum, VBO);
+    glDeleteBuffers(eboNum, EBO);
 }

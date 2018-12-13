@@ -49,7 +49,7 @@ void glDrawFrame() {
         render->renderFrame();
     } else if (renderV3 != NULL) {
         renderV3->renderFrame();
-    } {
+    } else {
         LOG_E("native render not init");
     }
 }

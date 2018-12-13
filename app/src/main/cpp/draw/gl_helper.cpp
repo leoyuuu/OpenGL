@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <android/log.h>
 #include <cmath>
+#include <cstdlib>
 #include "../native_helper.h"
 
 
@@ -26,7 +27,7 @@ void printGLString(const char *name, GLenum s) {
 
 void checkGlError(const char* op) {
     for (GLint error = glGetError(); error; error = glGetError()) {
-        LOG_I("after %s() glError (0x%x)\n", op, error);
+        LOG_E("after %s() glError (0x%x)\n", op, error);
     }
 }
 
@@ -93,6 +94,9 @@ GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
             }
             glDeleteProgram(program);
             program = 0;
+        } else {
+            glDeleteShader(vertexShader);
+            glDeleteShader(pixelShader);
         }
     }
     return program;

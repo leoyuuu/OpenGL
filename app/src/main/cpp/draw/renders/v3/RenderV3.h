@@ -11,8 +11,18 @@
 
 #define GL3 1
 
-class RenderV3{
+#define VAO_NUM 20
+#define VBO_NUM 20
+#define EBO_NUM 20
+
+class RenderV3 {
 protected:
+    GLuint vaoNum = 0;
+    GLuint vboNum = 0;
+    GLuint eboNum = 0;
+    GLuint VAO[VAO_NUM];
+    GLuint VBO[VBO_NUM];
+    GLuint EBO[EBO_NUM];
     GLuint program;
     GLuint vPosition;
     GLuint uColor;
