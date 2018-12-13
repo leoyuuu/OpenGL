@@ -33,6 +33,7 @@ char* Asset_ReadString(const char* filename) {
 
 bool Asset_ReadBuf(const char* filename, std::vector<uint8_t>& buf) {
     AAsset* assetDescriptor = AAssetManager_open(sApp.assetManager, filename, AASSET_MODE_BUFFER);
+    LOG_I("reading asset: %s", filename);
     assert(assetDescriptor != nullptr);
 
     off_t fileLength = AAsset_getLength(assetDescriptor);

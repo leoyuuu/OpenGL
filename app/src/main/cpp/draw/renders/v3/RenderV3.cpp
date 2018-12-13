@@ -7,6 +7,7 @@
 #include "../../gl_helper.h"
 #include "../../../native_helper.h"
 #include "../../ImgInfo.h"
+#include "RenderV3Box.h"
 
 #define LOG_TAG "v3_render"
 
@@ -61,7 +62,9 @@ public:
 RenderV3::~RenderV3() {}
 
 RenderV3* RenderV3::getRender() {
-    return new RenderV3Texture();
+//    return new RenderV3Simple();
+//    return new RenderV3Texture();
+    return RenderV3Box::getRender();
 }
 
 void RenderV3Simple::init() {
@@ -118,23 +121,7 @@ void RenderV3Texture::init() {
     aPosition = glGetAttribLocation(program, "aPosition");
     aCoordinate = glGetAttribLocation(program, "aCoordinate");
 
-    GLuint a[1];
-    glGenTextures(1, a);
-    texture = a[0];
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
-    ImgInfo imgInfo;
-    if (imgInfo.initFromAsset("pics/mianma.jpg")) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgInfo.getWidth(), imgInfo.getHeight(), 0,
-                     GL_RGBA, GL_UNSIGNED_BYTE, imgInfo.getData());
-        checkGlError("glTexImage2D");
-        glGenerateMipmap(GL_TEXTURE_2D);
-        checkGlError("glGenerateMipmap");
-    }
-    imgInfo.logInfo();
+    genGlTexture("pics/mianma.jpg", &texture);
 }
 
 void RenderV3Texture::renderFrame() {

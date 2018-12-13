@@ -13,6 +13,7 @@
 #include <cmath>
 #include <cstdlib>
 #include "../native_helper.h"
+#include "ImgInfo.h"
 
 
 #define LOG_TAG "native_helper"
@@ -25,9 +26,32 @@ void printGLString(const char *name, GLenum s) {
     LOG_I("GL %s = %s\n", name, v);
 }
 
-void checkGlError(const char* op) {
+void checkGlError(const char* op, uint8_t line = 0) {
     for (GLint error = glGetError(); error; error = glGetError()) {
-        LOG_E("after %s() glError (0x%x)\n", op, error);
+        LOG_E("after %s() glError (0x%x) line:%d\n", op, error, line);
+    }
+}
+
+void genGlTexture(const char * assetName, GLuint *texture) {
+    glGenTextures(1, texture);
+    glBindTexture(GL_TEXTURE_2D, *texture);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    ImgInfo imgInfo;
+    if(imgInfo.initFromAsset(assetName)) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgInfo.getWidth(), imgInfo.getHeight(), 0,
+                     GL_RGBA, GL_UNSIGNED_BYTE, imgInfo.getData());
+        checkGlError("glTexImage2D", __LINE__);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        checkGlError("glGenerateMipmap", __LINE__);
+        imgInfo.logInfo();
+    }else {
+        LOG_E("Failed to load texture: %s", assetName);
     }
 }
 

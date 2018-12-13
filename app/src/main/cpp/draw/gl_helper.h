@@ -13,7 +13,8 @@
 
 GLuint createProgram(const char* pVertexSource, const char* pFragmentSource);
 
-void checkGlError(const char* op);
+void genGlTexture(const char * assetName, GLuint *texture);
+void checkGlError(const char* op, uint8_t line = 0);
 void printGLString(const char *name, GLenum s);
 
 void frustumM(GLfloat m[16], GLint offset, GLfloat left, GLfloat right,

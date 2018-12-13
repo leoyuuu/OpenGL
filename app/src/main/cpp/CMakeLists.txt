@@ -13,8 +13,12 @@ add_library(
         draw/renders/RenderCube.cpp
         draw/renders/RenderSimple.cpp
         draw/renders/v3/RenderV3.cpp
+        draw/renders/v3/RenderV3Box.cpp
         native_helper.cpp
         native_gl.cpp
+        glm/glm.hpp
+        glm/gtc/matrix_transform.hpp
+        glm/gtc/type_ptr.hpp
         stb/stb_image.h)
 
 set_target_properties(gljni

@@ -20,10 +20,9 @@ class V3Activity : AppCompatActivity() {
         gl.setEGLContextClientVersion(3)
         val render = V3Render()
         gl.setRenderer(render)
-        gl.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
+        gl.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
         gl.setOnClickListener {
             render.click()
-            gl.requestRender()
         }
     }
 
