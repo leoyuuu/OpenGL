@@ -1,11 +1,11 @@
 package me.leoyuu.opengl.tmp
 
-import android.opengl.GLES20
-import android.opengl.GLES20.*
+import android.opengl.GLES30.*
 import android.opengl.GLSurfaceView
-import me.leoyuu.opengl.BuildConfig
 import me.leoyuu.opengl.glsl.createProgram
-import me.leoyuu.utils.loge
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import java.nio.FloatBuffer
 
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -17,32 +17,54 @@ import javax.microedition.khronos.opengles.GL10
  * @author leoyuu
  */
 class Render : GLSurfaceView.Renderer {
+    private var vPosition = 0
+    private var vColor = 0
+    private var p = 0
+    private var vao = IntArray(1)
+    private var vbo = IntArray(1)
 
-    private lateinit var shape:Shape
+    private val vertices = floatArrayOf(
+        0.5f,   0.5f,
+        -0.5f, -0.5f,
+        0.5f,  -0.5f
+    )
 
-    private var p = -1
-    private var vColor = -1
+    private val vertexBuf: FloatBuffer
 
-    override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
-        glClearColor(0f, 1f, 1f, 1f)
-        p = createProgram("tmp/tmp.vert", "tmp/tmp.frag")
-        vColor = glGetUniformLocation(p, "uColor")
-        shape = Shape(p, "vPosition", 2, floatArrayOf(0.0f, 0.5f, -0.5f, -0.5f, 0.5f,  -0.5f))
+    init {
+        val vbb = ByteBuffer.allocateDirect(vertices.size * 4)
+        vbb.order(ByteOrder.nativeOrder())
+        vertexBuf = vbb.asFloatBuffer()
+        vertexBuf.put(vertices)
+        vertexBuf.position(0)
     }
 
-    override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
+    override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
+        glClearColor(1.0f, 0.0f, 0.0f, 1.0f)
+        p = createProgram("tmp/tmp.vert", "tmp/tmp.frag")
+        vPosition = glGetAttribLocation(p, "vPosition")
+        vColor = glGetUniformLocation(p, "vColor")
+
+        glUniform4f(vColor, 0.0f, 1.0f, 0.0f, 1.0f)
+        glGenVertexArrays(1, vao, 0)
+        glBindVertexArray(vao[0])
+        glGenBuffers(1, vbo, 0)
+        glBindBuffer(GL_ARRAY_BUFFER, vbo[0])
+        glBufferData(GL_ARRAY_BUFFER, vertices.size * 4, vertexBuf, GL_STATIC_DRAW)
+        glEnableVertexAttribArray(vPosition)
+        glVertexAttribPointer(vPosition, 2, GL_FLOAT, false, 0, 0)
+    }
+
+    override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         glViewport(0, 0, width, height)
     }
 
     override fun onDrawFrame(gl: GL10) {
         glClear(GL_DEPTH_BUFFER_BIT or GL_COLOR_BUFFER_BIT)
-
         glUseProgram(p)
-        glUniform4f(vColor, 0.0f, 1.0f, 0.0f, 1.0f)
-
-        glEnableVertexAttribArray(shape.id)
-        glDrawArrays(GLES20.GL_TRIANGLES, 0, shape.count)
-        glDisableVertexAttribArray(shape.id)
-        glFlush()
+        glBindVertexArray(vao[0])
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 3)
+        glBindVertexArray(0)
     }
+
 }

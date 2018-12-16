@@ -1,6 +1,6 @@
 package me.leoyuu.opengl.tmp
 
-import android.opengl.GLES20.*
+import android.opengl.GLES30.*
 import me.leoyuu.utils.loge
 
 /**

@@ -20,7 +20,7 @@ class RenderV3BoxImp:public RenderV3Box{
 private:
     GLuint program;
     GLint matrix;
-    GLuint VBO, EBO;
+    GLuint VAO, VBO, EBO;
     GLfloat matrix4[16];
 public:
     virtual void init();
@@ -54,6 +54,8 @@ void RenderV3BoxImp::init() {
     matrix = glGetUniformLocation(program, "matrix");
     checkGlError("glGetUniformLocation", __LINE__);
 
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(NORMAL_BOX_INDICES_STRIP), NORMAL_BOX_INDICES_STRIP, GL_STATIC_DRAW);
@@ -65,6 +67,8 @@ void RenderV3BoxImp::init() {
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (const GLvoid *)sizeof(NORMAL_BOX));
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 }
@@ -84,12 +88,10 @@ void RenderV3BoxImp::renderFrame() {
     glUseProgram(program);
     rotateM(matrix4, 0, 1, 0, 1, 0);
     glUniformMatrix4fv(matrix, 1, GL_FALSE, matrix4);
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+    glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT, NULL);
     glDrawElements(GL_TRIANGLE_STRIP, 8, GL_UNSIGNED_SHORT,(const GLvoid *)(8 * sizeof(GLushort)));
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
+    glBindVertexArray(0);
     checkGlError("render frame", __LINE__);
 }
 
@@ -102,8 +104,18 @@ RenderV3BoxImp::~RenderV3BoxImp() {
 }
 
 
-void RenderV3Boxes::init() {}
-void RenderV3Boxes::click() {}
-void RenderV3Boxes::renderFrame() {}
-void RenderV3Boxes::resize(uint width, uint height) {}
-RenderV3Boxes::~RenderV3Boxes() {}
+void RenderV3Boxes::init() {
+
+}
+void RenderV3Boxes::click() {
+
+}
+void RenderV3Boxes::renderFrame() {
+
+}
+void RenderV3Boxes::resize(uint width, uint height) {
+
+}
+RenderV3Boxes::~RenderV3Boxes() {
+
+}

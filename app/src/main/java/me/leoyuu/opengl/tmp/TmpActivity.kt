@@ -18,7 +18,7 @@ class TmpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gl_view)
-        gl.setEGLContextClientVersion(2)
+        gl.setEGLContextClientVersion(3)
         gl.setRenderer(render)
         gl.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
     }
