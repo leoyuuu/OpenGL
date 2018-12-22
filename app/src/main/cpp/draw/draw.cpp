@@ -55,16 +55,23 @@ void glDrawFrame() {
 }
 
 void glInitType(int type) {
-    if (type == 1) {
-        render = new RenderSimple();
-    } else if (type == 2){
-        render = new RenderCube();
-    } else if (type == 3) {
-        render = new RenderCamera();
-    } if (type == 4){
-        renderV3 = RenderV3::getRender();
-    } else{
-        render = new Render();
+    LOG_E("gl init type: %d", type);
+    switch (type) {
+        case 1:
+            render = new RenderSimple();
+            break;
+        case 2:
+            render = new RenderCube();
+            break;
+        case 3:
+            render = new RenderCamera();
+            break;
+        case 4:
+            renderV3 = RenderV3::getRender();
+            break;
+        default:
+            render = new Render();
+            break;
     }
 }
 
