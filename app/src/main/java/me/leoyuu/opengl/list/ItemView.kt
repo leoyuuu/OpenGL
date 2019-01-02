@@ -2,7 +2,10 @@ package me.leoyuu.opengl.list
 
 import android.content.Context
 import android.graphics.Color
-import android.widget.TextView
+import android.opengl.GLES30
+import android.view.Gravity
+import androidx.appcompat.widget.AppCompatButton
+import me.leoyuu.opengl.R
 import me.leoyuu.rv.BaseRvItemView
 
 /**
@@ -12,17 +15,19 @@ import me.leoyuu.rv.BaseRvItemView
  * @author leoyuu
  */
 class ItemView(context: Context) : BaseRvItemView<RenderItem>(context) {
-    private val tv = TextView(context)
+    private val btn = AppCompatButton(context)
     init {
-        addView(tv)
-        tv.setTextColor(Color.BLACK)
-        tv.setBackgroundColor(Color.GREEN)
-        tv.setPadding(48, 15, 48, 15)
-        setPadding(0, 0, 0, 3)
-        setBackgroundColor(Color.LTGRAY)
+        addView(btn)
+        setPadding(48, 3, 48, 0)
+        btn.setTextColor(Color.WHITE)
+        btn.setBackgroundResource(R.drawable.btn)
+        btn.gravity = Gravity.CENTER
+        btn.setOnClickListener {
+            performClick()
+        }
     }
 
     override fun onBindData(data: RenderItem) {
-        tv.text = data.desc
+        btn.text = data.desc
     }
 }

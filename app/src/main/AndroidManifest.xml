@@ -33,6 +33,7 @@
         <activity android:name=".jni.JniActivity" />
         <activity android:name=".obj.ObjViewActivity" />
         <activity android:name=".esv3.V3Activity" />
+        <activity android:name=".fbo.FrameBufferActivity" />
     </application>
 
 </manifest>

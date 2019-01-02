@@ -6,11 +6,19 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context=".MainActivity">
+        tools:context=".fbo.FrameBufferActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lv"
+    <android.opengl.GLSurfaceView
+            android:id="@+id/gl_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="200dp"/>
+
+
+    <ImageView
+            android:id="@+id/gl_img"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
 
 </LinearLayout>
