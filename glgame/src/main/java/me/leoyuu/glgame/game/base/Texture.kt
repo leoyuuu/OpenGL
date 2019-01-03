@@ -15,6 +15,8 @@ data class Texture (
     val bmp:Bitmap,
     var textureId:Int = 0
 ) {
+    val width = bmp.width
+    val height = bmp.height
 
     fun release() {
         if (textureId != 0) {

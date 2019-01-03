@@ -9,9 +9,9 @@ import android.opengl.Matrix
  * @author leoyuu
  */
 abstract class Node {
-    var sw = 0
+    var sw = 1
     private set
-    var sh = 0
+    var sh = 1
     private set
 
     abstract fun initNode()

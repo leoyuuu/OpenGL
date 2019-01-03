@@ -2,6 +2,7 @@ package me.leoyuu.glgame.game.base
 
 import android.opengl.GLES20
 import android.opengl.GLUtils
+import android.opengl.Matrix
 import me.leoyuu.glgame.game.GlShader
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -35,12 +36,7 @@ open class Sprite(val glShader: GlShader) : Node() {
         position(0)
     }
 
-    var matrix:FloatArray = BASE_MATRIX
-
-    var width: Float = 0f
-    var height: Float = 0f
-    var x: Float = 0f
-    var y: Float = 0f
+    var matrix:FloatArray = BASE_MATRIX.clone()
     var texture:Texture? = null
 
     override fun initNode() {
@@ -66,5 +62,23 @@ open class Sprite(val glShader: GlShader) : Node() {
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
         glShader.glDisableVertexAttribArray(glShader.aPosition)
         glShader.glDisableVertexAttribArray(glShader.aCoordinate)
+    }
+
+    fun wrapBmpSize() {
+        val t = texture
+        t?:return
+        Matrix.scaleM(matrix, 0, t.width.toFloat() / sw, t.height.toFloat() / sh, 1f)
+    }
+
+    fun scale(scale:Float) {
+        Matrix.scaleM(matrix, 0, scale, scale, scale)
+    }
+
+    fun rotate(angle:Float) {
+        Matrix.rotateM(matrix, 0, angle, 0f, 0f, 1.0f)
+    }
+
+    fun move(x:Float = 0f, y:Float = 0f) {
+        Matrix.translateM(matrix, 0, x, y, 0f)
     }
 }

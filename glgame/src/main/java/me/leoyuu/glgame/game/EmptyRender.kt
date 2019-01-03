@@ -1,13 +1,8 @@
 package me.leoyuu.glgame.game
 
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.opengl.GLES20
-import androidx.core.content.ContextCompat
-import me.leoyuu.glgame.R
 import me.leoyuu.glgame.game.base.Label
-import me.leoyuu.glgame.game.base.Sprite
-import me.leoyuu.glgame.game.base.Texture
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -36,9 +31,8 @@ class EmptyRender(context: Context) : GameRender(context) {
 
     override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
         super.onSurfaceChanged(gl, width, height)
-        label.x = (width - label.width) / 2
-        label.y = (height - label.height) / 2
-        label.matrix = matrix
+        label.matrix = matrix.clone()
+        label.wrapBmpSize()
     }
 
     override fun getTextureNum(): Int {
