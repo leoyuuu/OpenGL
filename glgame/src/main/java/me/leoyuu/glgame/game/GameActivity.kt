@@ -23,8 +23,8 @@ class GameActivity : AppCompatActivity() {
 
         gl.setEGLContextClientVersion(2)
         gl.setRenderer(when(intent.getStringExtra(GAME_NAME)) {
-            GAME_SHOOT -> ShooterRender()
-            else -> EmptyRender()
+            GAME_SHOOT -> ShooterRender(this)
+            else -> EmptyRender(this)
         })
         gl.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
     }
@@ -43,8 +43,10 @@ class GameActivity : AppCompatActivity() {
         private const val GAME_NAME = "game_name"
 
         private const val GAME_SHOOT = "shoot"
+        private const val GAME_EMPTY = "nothing"
 
         val GAMES = arrayOf(
+            GAME_EMPTY,
             GAME_SHOOT
         )
 
