@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="me.leoyuu.glgame">
+    <application>
+        <activity android:name=".game.GameActivity" />
+        <activity android:name=".GameMainActivity" >
+        </activity>
+    </application>
+</manifest>

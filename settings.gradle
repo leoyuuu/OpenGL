@@ -1,1 +1,1 @@
-include ':app', ':utils', ':rv'
+include ':app', ':utils', ':rv', ':glgame'

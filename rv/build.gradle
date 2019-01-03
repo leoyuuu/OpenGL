@@ -4,10 +4,8 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion compile_version
 
-
-
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion min_version
         targetSdkVersion target_version
         versionCode 1
         versionName "1.0"
@@ -29,8 +27,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation(project(':utils'))
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1-alpha01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1-alpha01'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'androidx.recyclerview:recyclerview:1.0.0'
 }

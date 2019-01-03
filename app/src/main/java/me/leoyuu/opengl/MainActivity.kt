@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import me.leoyuu.glgame.GameMainActivity
 import me.leoyuu.opengl.camera.CameraActivity
 import me.leoyuu.opengl.ctrl.jump.JumpActivity
 import me.leoyuu.opengl.esv3.V3Activity
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() , BaseOnItemClickListener<RenderItem>{
             add(RenderItem(ObjViewActivity::class.java, "3d max obj 模型绘制"))
             add(RenderItem(V3Activity::class.java, "OpenGL 3.0"))
             add(RenderItem(FrameBufferActivity::class.java, "FBO 初探"))
+            add(RenderItem(GameMainActivity::class.java, "GL 小游戏"))
         })
     }
 
