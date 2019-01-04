@@ -36,7 +36,7 @@ open class Sprite(val glShader: GlShader) : Node() {
         position(0)
     }
 
-    var matrix:FloatArray = BASE_MATRIX.clone()
+    var matrix:FloatArray = BASE_MATRIX
     var texture:Texture? = null
 
     override fun initNode() {
@@ -45,7 +45,7 @@ open class Sprite(val glShader: GlShader) : Node() {
 
         glShader.use()
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, t.textureId)
-        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, t.bmp, 0)
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D,0, GLES20.GL_RGBA, t.bmp,0)
     }
 
     override fun draw(dt:Long) {

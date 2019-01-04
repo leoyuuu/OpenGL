@@ -2,6 +2,7 @@ package me.leoyuu.glgame.game
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.PixelFormat
 import android.opengl.GLSurfaceView
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,10 +23,12 @@ class GameActivity : AppCompatActivity() {
         setContentView(gl)
 
         gl.setEGLContextClientVersion(2)
+        gl.setEGLConfigChooser(8, 8, 8, 8, 16, 8)
         gl.setRenderer(when(intent.getStringExtra(GAME_NAME)) {
             GAME_SHOOT -> ShooterRender(this)
             else -> EmptyRender(this)
         })
+        gl.holder.setFormat(PixelFormat.RGBA_8888)
         gl.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
     }
 

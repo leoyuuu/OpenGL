@@ -21,11 +21,12 @@ class Label(glShader: GlShader) : Sprite(glShader) {
     }
 
     fun setText(text:String, texture:Int) {
-        val w = paint.measureText(text)
-        val bmp = Bitmap.createBitmap((w + 10).toInt(), (paint.textSize * 2).toInt(), Bitmap.Config.ARGB_8888)
+        val w = (paint.measureText(text) + 10).toInt()
+        val h = (paint.textSize * 1.3).toInt()
+        val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444)
         val canvas = Canvas(bmp)
-        canvas.drawColor(Color.TRANSPARENT)
-        canvas.drawText(text, 5f, paint.textSize, paint)
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+        canvas.drawText(text, 5f, h * 0.8f, paint)
         this.texture = Texture(bmp, texture)
     }
 }
